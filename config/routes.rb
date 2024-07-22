@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
+
   resources :artists, only: [:index, :show] do
     resources :albums, only: [:index, :show] do
       resources :songs, only: [:index, :show]
