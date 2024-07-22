@@ -3,7 +3,7 @@ class CreateSongs < ActiveRecord::Migration[7.1]
     create_table :songs do |t|
       t.string :title
       t.integer :genre
-      t.integer :year
+      t.datetime :release_date
       t.time :duration
 
       t.timestamps
