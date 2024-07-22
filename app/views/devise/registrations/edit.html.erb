@@ -20,7 +20,7 @@
 
   <div class="field">
     <%= f.label :sex %>
-    <%= f.select :sex, User.sexes.keys.map { |w| [w.humanize, w] } %>
+    <%= f.text_field :sex %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

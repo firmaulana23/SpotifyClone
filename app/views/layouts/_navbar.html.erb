@@ -1,0 +1,48 @@
+<!-- app/views/layouts/application.html.erb -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyApp</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+</head>
+<body style="background-color: #4A2574;">
+  <nav style="background-color: #733BA0;" class=" p-3">
+    <div class="container mx-auto flex items-center justify-between">
+      
+      <div class="flex items-center">
+        <div class="flex">
+          <%= link_to root_path do %>
+            <%= image_tag 'navigation/home-icon.svg', alt: 'Home', class: 'h-8 w-8 mr-4 text-white' %>
+          <% end %>
+        </div>
+
+        <!-- Search input -->
+        <div class="flex items-center bg-gray-700 rounded-full px-2 py-1.5 max-w-full">
+          <input type="text" placeholder="Search" class="bg-transparent border-none w-full text-white placeholder-gray-400 focus:outline-none ml-2 mx-20">
+        </div>
+      </div>
+      
+      <div class="">
+      <!-- Navigation links -->
+        <ul class="flex">
+          <% if user_signed_in? %>
+            <li class="pr-10"><%= link_to 'Profile', edit_user_registration_path, class: "text-white" %></li>
+            <li><%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "text-white" %></li>
+          <% else %>
+            <li><%= link_to 'Login', new_user_session_path, class: "text-white" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto mt-4">
+    <%= yield %>
+  </div>
+</body>
+</html>

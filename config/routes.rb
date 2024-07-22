@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'search/index'
+  get 'home/index'
   devise_for :users
   devise_scope :user do
     get '/users/sign_out', to: 'devise/sessions#destroy'
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
       resources :songs, only: [:index, :show]
     end
   end
-  root "artists#index"
+  root "home#index"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
