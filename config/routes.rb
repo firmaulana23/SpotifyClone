@@ -5,12 +5,24 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
+  
+  # Artists routes
+  resources :artists
+  resources :albums
+  resources :songs
+  
 
-  resources :artists, only: [:index, :show] do
-    resources :albums, only: [:index, :show] do
-      resources :songs, only: [:index, :show]
-    end
+  resources :songs, only: [] do
+    resource :liked_song
   end
+
+  # Playlists routes
+  resources :playlists do
+    resources :playlist_songs
+  end
+
+  resources :playlist
+
   root "home#index"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

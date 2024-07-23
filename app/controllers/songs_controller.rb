@@ -13,6 +13,7 @@ class SongsController < ApplicationController
   # GET /songs/new
   def new
     @song = Song.new
+    @song.artist_songs.build
   end
 
   # GET /songs/1/edit
@@ -65,6 +66,6 @@ class SongsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def song_params
-      params.require(:song).permit(:title, :genre, :release_date, :duration)
+      params.require(:song).permit(:title, :genre, :release_date, :duration, artist_ids: [])
     end
 end

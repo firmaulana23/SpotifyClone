@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+ .svg-white {
+    filter: brightness(0) invert(1);
+  }

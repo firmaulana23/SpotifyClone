@@ -16,6 +16,12 @@
     <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
+  <div class="field">
+    <%= form.label :song %>
+    <%= form.collection_select :song_ids, Song.order(:title), :id, :title, {},
+    multiple:true, prompt: "Select Song", class: "", data: {}%>
+  </div>
+
   <div class="my-5">
     <%= form.label :release_date %>
     <%= form.datetime_field :release_date, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>

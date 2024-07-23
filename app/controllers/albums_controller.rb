@@ -13,6 +13,7 @@ class AlbumsController < ApplicationController
   # GET /albums/new
   def new
     @album = Album.new
+    @album.album_songs.build
   end
 
   # GET /albums/1/edit
@@ -65,6 +66,6 @@ class AlbumsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def album_params
-      params.require(:album).permit(:name, :release_date)
+      params.require(:album).permit(:name, :release_date, song_ids: [])
     end
 end

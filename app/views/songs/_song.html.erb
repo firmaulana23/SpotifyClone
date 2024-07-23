@@ -5,8 +5,21 @@
   </p>
 
   <p class="my-5">
+    <strong class="block font-medium mb-1">Artist:</strong>
+    <% song.artists.each do |artist| %>
+      <%= artist.name %> |
+      <% end %>
+  </p>
+
+  <p class="my-5">
     <strong class="block font-medium mb-1">Genre:</strong>
-    <%= song.genre %>
+    <% if song.genre == "1" %>
+      Pop
+    <% elsif song.genre == "2" %>
+      Rock
+    <% elsif song.genre == "3" %>
+      Classic
+      <% end %>
   </p>
 
   <p class="my-5">

@@ -17,13 +17,18 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :genre %>
-    <%= form.number_field :genre, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= render 'song_genre', form: form %>
+  </div>
+
+  <div class="field">
+    <%= form.label :artist %>
+    <%= form.collection_select :artist_ids, Artist.order(:name), :id, :name, {},
+    multiple:true, prompt: "Select Artist", class: "", data: {}%>
   </div>
 
   <div class="my-5">
     <%= form.label :release_date %>
-    <%= form.datetime_field :release_date, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.date_field :release_date, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
