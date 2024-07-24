@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :song %>
-    <%= form.collection_select :song_ids, Song.order(:title), :id, :title, {},
+    <%= form.collection_select :song_ids, Song.where.not(id: AlbumSong.select(:song_id)), :id, :title, {},
     multiple:true, prompt: "Select Song", class: "", data: {}%>
   </div>
 
