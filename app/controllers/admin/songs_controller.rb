@@ -32,6 +32,8 @@ class Admin::SongsController < ApplicationController
   end
 
   def destroy
+    @song.artist_songs.destroy_all
+    @song.album_songs.destroy_all
     @song.destroy!
 
     respond_to do |format|

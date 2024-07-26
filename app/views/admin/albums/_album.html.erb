@@ -1,0 +1,19 @@
+<div id="<%= dom_id album %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= album.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Song:</strong>
+    <% album.songs.each do |song| %>
+      <%= song.title %> |
+      <% end %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Release date:</strong>
+    <%= album.release_date %>
+  </p>
+
+</div>
