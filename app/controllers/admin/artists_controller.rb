@@ -6,7 +6,13 @@ class Admin::ArtistsController < ApplicationController
   end
 
   def new
-    @aritst = Artist.new
+    @artist = Artist.new
+  end
+
+  def show
+  end
+
+  def edit
   end
 
   def create
@@ -37,7 +43,8 @@ class Admin::ArtistsController < ApplicationController
   end
 
   def destroy
-    @artist.destroy!
+    @artist.artist_songs.destroy_all
+    @artist.destroy
 
     respond_to do |format|
       format.html { redirect_to admin_artists_url, notice: "Artist was successfully destroyed." }

@@ -6,9 +6,7 @@
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Artist:</strong>
-    <% song.artists.each do |artist| %>
-      <%= artist.name %> |
-      <% end %>
+    <%= song.artists.pluck(:name).join(", ") %>
   </p>
 
   <p class="my-5">
