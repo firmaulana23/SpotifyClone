@@ -9,6 +9,22 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const durationField = document.getElementById('duration-field');
+
+        durationField.addEventListener('input', function() {
+          let value = this.value;
+          // Remove any non-digit characters
+          value = value.replace(/\D/g, '');
+          // Format as MM:SS
+          if (value.length > 2) {
+            value = value.slice(0, -2) + ':' + value.slice(-2);
+          }
+          this.value = value;
+        });
+      });
+    </script>
   </head>
 
   <body style="background-color: #4A2574;">

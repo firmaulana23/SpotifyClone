@@ -1,0 +1,35 @@
+<div id="<%= dom_id song %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Title:</strong>
+    <%= song.title %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Artist:</strong>
+    <% song.artists.each do |artist| %>
+      <%= artist.name %> |
+      <% end %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Genre:</strong>
+    <% if song.genre == "1" %>
+      Pop
+    <% elsif song.genre == "2" %>
+      Rock
+    <% elsif song.genre == "3" %>
+      Classic
+      <% end %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Release date:</strong>
+    <%= song.release_date %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Duration:</strong>
+    <%= song.duration %>
+  </p>
+
+</div>

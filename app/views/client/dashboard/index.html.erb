@@ -3,6 +3,7 @@
   <div class="flex flex-col rounded-lg p-10 shadow-lg w-4/12 h-full" style="background-color: #2D075C;">
     <div class="flex items-center w-full justify-between mb-5">
       <h2 class="text-white text-gray-350 font-extrabold text-3xl">Library</h2>
+      <%= image_tag 'index/plus-icon.svg', alt: 'Add', class: 'h-6 w-6 mr-4 svg-white' %>
     </div>
 
     <div class="flex space-x-4 p-4 justify-center">
@@ -10,8 +11,16 @@
       <button class="bg-purple-700 text-gray-400 rounded-full py-0 px-3" style="background-color: #4A2574;">Others</button>
     </div>
 
-    <div id="playlists" class="w-full flex justify-center text-white mt-20 mb-20">
-      Login for playlist
+    <div id="playlists" class="space-y-5 flex flex-col">
+      <% if @playlists.present? %>
+        <% @playlists.each do |playlist| %>
+          <%= link_to playlist_path(playlist), class: "border rounded py-2 px-3 block hover:bg-gray-100 transition duration-300" do %>
+            <div>
+              <%= render playlist %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>  
     </div>
 
   <!-- Home -->

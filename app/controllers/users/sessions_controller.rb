@@ -10,11 +10,13 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    self.resource = warden.authenticate!(auth_options)
-    set_flash_message!(:notice, :sign_in)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
-    resources_with resource, location: after_sign_in_path_for(resource)
+    super do |resource|
+      if resource.admin?
+        redirect_to admin_root_path and return
+      else
+        redirect_to client_root_path and return
+      end
+    end
   end
 
   # DELETE /resource/sign_out
@@ -43,6 +45,16 @@ class Users::SessionsController < Devise::SessionsController
       ).first
     else
       where(conditions.to_h).first
+    end
+  end
+
+  protected
+
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      admin_root_path
+    else
+      client_root_path
     end
   end
 end
