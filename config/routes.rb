@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     get 'dashboard/index'
     root "dashboard#index"  # Admin dashboard root
     resources :users
-    resources :songs
+    resources :songs, param: :id
     resources :artist_songs
     resources :artists
     resources :albums
