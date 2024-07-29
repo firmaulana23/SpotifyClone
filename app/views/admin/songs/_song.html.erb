@@ -25,6 +25,15 @@
     <%= song.release_date %>
   </p>
 
+  <% if @song.file.attached? %>
+  <audio controls>
+    <source src="<%= url_for(@song.file) %>" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+<% else %>
+  <p>No file attached</p>
+<% end %>
+
   <p class="my-5">
     <strong class="block font-medium mb-1">Duration:</strong>
     <%= song.duration %>

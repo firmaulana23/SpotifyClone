@@ -14,7 +14,7 @@
     <% @songs.each do |song| %>
       <% bg_color = cycle('#521d75', '#471d63') %>
       <div class="flex w-full items-center justify-between h-20" style="background-color: <%= bg_color %>;">
-        <%= link_to edit_admin_song_path(song), class: "flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" do %>
+        <%= link_to admin_song_path(song), class: "flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" do %>
           
           <div class="w-12 h-12 border ml-10">
           </div>

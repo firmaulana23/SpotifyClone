@@ -8,6 +8,9 @@ class Admin::SongsController < ApplicationController
     @song.artist_songs.build
   end
 
+  def show
+  end
+
   def create
     @song = Song.new(song_params)
     if @song.save
@@ -50,6 +53,6 @@ class Admin::SongsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def song_params
-      params.require(:song).permit(:title, :genre, :release_date, :duration, artist_ids: [])
+      params.require(:song).permit(:title, :genre, :release_date, :duration, :file, artist_ids: [])
     end
 end
