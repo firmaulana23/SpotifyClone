@@ -1,47 +1,47 @@
-<div id="<%= dom_id song %>">
+<div id="<%= dom_id song %>" class=" text-gray-400">
+  <% if song.image.attached? %>
+    <div class="flex w-full h-40 justify-center items-center">
+      <%= image_tag url_for(song.image), class: "w-40" %>
+    </div>  
+  <% end %>
+
   <div>
-    <% if song.image.attached? %>
-      <%= image_tag url_for(song.image), class: "w-10 h-10" %>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Title:</strong>
+      <%= song.title %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Artist:</strong>
+      <%= song.artists.pluck(:name).join(", ") %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Genre:</strong>
+      <% if song.genre == "1" %>
+        Pop
+      <% elsif song.genre == "2" %>
+        Rock
+      <% elsif song.genre == "3" %>
+        Classic
+        <% end %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Release date:</strong>
+      <%= song.release_date %>
+    </p>
+
+    <% if @song.song.attached? %>
+      <audio controls>
+        <source src="<%= url_for(@song.song) %>" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
     <% end %>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Duration:</strong>
+      <%= song.duration %>
+    </p>
   </div>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Title:</strong>
-    <%= song.title %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Artist:</strong>
-    <%= song.artists.pluck(:name).join(", ") %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Genre:</strong>
-    <% if song.genre == "1" %>
-      Pop
-    <% elsif song.genre == "2" %>
-      Rock
-    <% elsif song.genre == "3" %>
-      Classic
-      <% end %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Release date:</strong>
-    <%= song.release_date %>
-  </p>
-
-  <% if @song.song.attached? %>
-  <audio controls>
-    <source src="<%= url_for(@song.song) %>" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-<% else %>
-  <p>No file attached</p>
-<% end %>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Duration:</strong>
-    <%= song.duration %>
-  </p>
-
 </div>

@@ -1,20 +1,20 @@
 <div class="w-full">
-    <% if notice.present? %>
-        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
     <% content_for :title, "Artists" %>
-    <div class="flex justify-between items-center">
-        <h1 class="font-bold text-4xl">Artist</h1>
-        <%= link_to "Artist", new_admin_artist_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <div class="flex justify-between items-center mb-10 mt-10">
+        <h1 class="font-bold text-4xl text-gray-300">Artist Name</h1>
+        <%= link_to "New Artist", new_admin_artist_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
     </div>
 
     <div id="artists" class="min-w-full">
         <% @artists.each do |artist| %>
-            <%= render artist %>
-            <p>
-                <%= link_to "Show this artist", [:admin, artist], class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-            </p>
+            <% bg_color = cycle('#220c30', '#1d0f30') %>
+            <div class="flex w-full items-center justify-between h-20" style="background-color: <%= bg_color %>;">
+                <%= link_to admin_artist_path(artist), class: "flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" do %>
+                    <div class="flex-grow items-center w-0 ml-10">
+                        <h2 class="text-gray-300"><%= artist.name %></h2>
+                    </div>
+                <%end%>
+            </div>
         <% end %>
     </div>
 </div>

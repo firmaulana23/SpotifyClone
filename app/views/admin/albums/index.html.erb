@@ -1,4 +1,4 @@
-<div class="w-full">
+<div class="w-full text-gray-400">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
@@ -10,12 +10,23 @@
     <%= link_to "New album", new_admin_album_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="albums" class="min-w-full">
+  <div id="albums" class="w-full m-4">
     <% @albums.each do |album| %>
-      <%= render album %>
-      <p>
-        <%= link_to "Show this album", [:admin,album], class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
+      <% bg_color = cycle('#220c30', '#1d0f30') %>
+      <div class="flex-col w-full items-center justify-between h-20" style="background-color: <%= bg_color %>;">
+        <%= link_to admin_album_path(album), class: "flex flex-col w-full h-full cursor-pointer hover:bg-gray-200/10 justify-center" do %>
+          <div class="pl-10">
+      
+            <%= album.name %>
+            <br>
+            <% if album.release_date.present? %>
+              <%= album.release_date.strftime("%Y") %>
+            <% else %>
+              Unknown
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
