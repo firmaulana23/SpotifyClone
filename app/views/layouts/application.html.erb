@@ -1,3 +1,4 @@
+<!-- application.html.rb -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,17 +29,22 @@
   </head>
 
   <body style="background-color: #0e061a;">
-      <%= render "layouts/navbar"%>
-    <div class="container mx-auto mt-8">
-      <% if flash[:notice] %>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-          <span class="block sm:inline"><%= flash[:notice] %></span>
-        </div>
-      <% elsif flash[:alert] %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-          <span class="block sm:inline"><%= flash[:alert] %></span>
-        </div>
-      <% end %>
-    </div>
+    
+      <div class="mb-24">
+        <%= render "layouts/navbar" %>
+      </div>
+
+      <div class="container mx-auto">
+        <% if flash[:notice] %>
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline"><%= flash[:notice] %></span>
+          </div>
+        <% elsif flash[:alert] %>
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline"><%= flash[:alert] %></span>
+          </div>
+        <% end %>
+      </div>
+    
   </body>
 </html>

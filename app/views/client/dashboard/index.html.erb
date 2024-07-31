@@ -1,8 +1,9 @@
-<div class="flex h-full w-full space-x-4">
+<!-- index.html .html.rb-->
+<div class="flex h-dvh w-full space-x-4 mt-24">
   <!-- Library -->
-  <div class="flex flex-col rounded-lg p-10 shadow-lg w-4/12 h-full" style="background-color: #2D075C;">
+  <div class="flex flex-col rounded-lg p-10 shadow-lg w-4/12 h-full" style="background-color: #1d0f30;">
     <div class="flex items-center w-full justify-between mb-5">
-      <h2 class="text-white text-gray-350 font-extrabold text-3xl">Library</h2>
+      <h2 class="text-gray-300 font-extrabold text-3xl">Library</h2>
       <%= image_tag 'index/plus-icon.svg', alt: 'Add', class: 'h-6 w-6 mr-4 svg-white' %>
     </div>
 
@@ -22,11 +23,43 @@
         <% end %>
       <% end %>  
     </div>
+  </div>
 
   <!-- Home -->
-  </div>
-  
-  <div class="rounded-lg p-7 shadow-lg w-8/12 h-full" style="background-color: #2D075C;">
-    A
+  <div class="rounded-lg shadow-lg w-8/12 max-h-full" style="background-color: #1d0f30;">
+    <p class="text-gray-300 font-extrabold text-3xl p-7 "> Recomended for you</p>
+    <div id="songs" class="w-full left-0">
+    <% @songs.each do |song| %>
+      <% bg_color = cycle('#220c30', '#1d0f30') %>
+      <div class="flex w-full items-center justify-between h-20" style="background-color: <%= bg_color %>;">
+        <%= link_to client_song_path(song), class: "flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" do %>
+          <div class="flex w-12 h-12 ml-10 justify-center items-center">
+            <% if song.image.attached? %>
+              <%= image_tag url_for(song.image) %>
+            <% end %>
+          </div>
+
+          <div class="flex-grow items-center w-0 ml-10">
+            <h2 class="text-gray-300"><%= song.title %></h2>
+          </div>
+
+          <div class="flex-grow flex items-center justify-center text-gray-300 w-0">
+            <% song.artists.each_with_index do |artist, i| %>
+              <%= artist.name %><%= ", " unless i == song.artists.size - 1 %>
+            <% end %>
+          </div>
+
+          <div class="flex-grow flex items-center justify-center w-1/12">
+            <h2 class="text-gray-300">
+              <% if song.duration.present? %>
+                <%= song.format_duration(song.duration) %>
+              <% else %>
+                00:00
+              <% end %>
+            </h2>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
