@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, song], class: "contents") do |form| %>
+<%= form_with(model: [:admin, song], class: "contents text-gray-300") do |form| %>
   <% if song.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(song.errors.count, "error") %> prohibited this song from being saved:</h2>
@@ -13,7 +13,7 @@
 
   <div class="my-5">
     <%= form.label :title %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :title, class: "text-black block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
@@ -23,12 +23,12 @@
   <div class="field">
     <%= form.label :artist %>
     <%= form.collection_select :artist_ids, Artist.order(:name), :id, :name, {},
-    multiple:true, prompt: "Select Artist", class: "", data: {}%>
+    multiple:true, prompt: "Select Artist", class: "text-black", data: {}%>
   </div>
 
   <div>
-    <%= form.label :song %><br>
-    <%= form.file_field :song %>
+    <%= form.label :audio %><br>
+    <%= form.file_field :audio %>
   </div>
 
   <div>
@@ -38,7 +38,7 @@
   
   <div class="my-5">
     <%= form.label :release_date %>
-    <%= form.date_field :release_date, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.date_field :release_date, class: "text-black block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="inline">

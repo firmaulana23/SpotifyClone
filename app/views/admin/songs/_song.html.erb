@@ -32,16 +32,20 @@
       <%= song.release_date %>
     </p>
 
-    <% if @song.song.attached? %>
+    <% if song.audio.attached? %>
       <audio controls>
-        <source src="<%= url_for(@song.song) %>" type="audio/mpeg">
+        <source src="<%= url_for(song.audio) %>" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
     <% end %>
 
     <p class="my-5">
       <strong class="block font-medium mb-1">Duration:</strong>
-      <%= song.duration %>
+      <% if song.audio.attached? %>
+        <%= song.format_duration(song.duration) %>
+      <% else %>
+        <p>unknown </p>
+      <% end %>
     </p>
   </div>
 </div>

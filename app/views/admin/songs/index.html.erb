@@ -35,7 +35,7 @@
           <div class="flex-grow flex items-center justify-center w-1/12">
             <h2 class="text-gray-300">
               <% if song.duration.present? %>
-                <%= song.duration.strftime('%M:%S') %>
+                <%= song.format_duration(song.duration) %>
               <% else %>
                 00:00
               <% end %>
