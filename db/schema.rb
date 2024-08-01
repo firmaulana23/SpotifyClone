@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_30_090216) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_01_023337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_090216) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "liked_songs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "song_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["song_id"], name: "index_liked_songs_on_song_id"
+    t.index ["user_id"], name: "index_liked_songs_on_user_id"
+  end
+
   create_table "playlist_songs", force: :cascade do |t|
     t.bigint "song_id", null: false
     t.bigint "playlist_id", null: false
@@ -129,6 +138,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_090216) do
   add_foreign_key "album_songs", "songs"
   add_foreign_key "artist_songs", "artists"
   add_foreign_key "artist_songs", "songs"
+  add_foreign_key "liked_songs", "songs"
+  add_foreign_key "liked_songs", "users"
   add_foreign_key "playlist_songs", "playlists"
   add_foreign_key "playlist_songs", "songs"
   add_foreign_key "playlists", "users"

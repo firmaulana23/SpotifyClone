@@ -11,6 +11,7 @@ class Song < ApplicationRecord
   has_many :artists, through: :artist_songs
   has_many :playlist_songs
   has_many :playlist, through: :playlist_songs
+  has_many :liked_songs
 
   def should_generate_new_friendly_id?
     title_changed?

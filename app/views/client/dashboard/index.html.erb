@@ -1,5 +1,30 @@
 <!-- index.html .html.rb-->
-<div class="flex h-dvh w-full space-x-4 mt-24">
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Select all song containers
+    document.querySelectorAll('.song-container').forEach(function(container) {
+      container.addEventListener('click', function() {
+        // Get the associated audio element
+        var audioId = container.getAttribute('data-audio-id');
+        var audio = document.getElementById(audioId);
+        
+        // Pause all other audios
+        document.querySelectorAll('audio').forEach(function(a) {
+          if (a !== audio) a.pause();
+        });
+
+        // Play the selected audio
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      });
+    });
+  });
+</script>
+
+<div class="flex h-auto w-full space-x-4 mt-24">
   <!-- Library -->
   <div class="flex flex-col rounded-lg p-10 shadow-lg w-4/12 h-full" style="background-color: #1d0f30;">
     <div class="flex items-center w-full justify-between mb-5">
@@ -10,6 +35,10 @@
     <div class="flex space-x-4 p-4 justify-center">
       <button class="bg-purple-700 text-gray-400 rounded-full py-0 px-3" style="background-color: #4A2574;">My Playlist</button>
       <button class="bg-purple-700 text-gray-400 rounded-full py-0 px-3" style="background-color: #4A2574;">Others</button>
+    </div>
+
+    <div id="liked" class="border rounded py-2 px-3 block hover:bg-gray-100 transition duration-300">
+      a
     </div>
 
     <div id="playlists" class="space-y-5 flex flex-col">
@@ -28,18 +57,24 @@
   <!-- Home -->
   <div class="rounded-lg shadow-lg w-8/12 max-h-full" style="background-color: #1d0f30;">
     <p class="text-gray-300 font-extrabold text-3xl p-7 "> Recomended for you</p>
+    <div class="flex flex-grow w-full items-center h-20 text-gray-300">
+      <p class="ml-6 w-16 mr-1">#</p>
+      <p class="w-80">Song</p>
+      <p class="w-60">Artist<p>
+      <p class="ml-3">Duration<p>
+    </div>
     <div id="songs" class="w-full left-0">
-    <% @songs.each do |song| %>
+      <% @songs.each do |song| %>
       <% bg_color = cycle('#220c30', '#1d0f30') %>
       <div class="flex w-full items-center justify-between h-20" style="background-color: <%= bg_color %>;">
-        <%= link_to client_song_path(song), class: "flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" do %>
-          <div class="flex w-12 h-12 ml-10 justify-center items-center">
+        <div class="song-container flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" data-audio-id="<%= dom_id(song) %>">
+          <div class="flex w-12 h-12 ml-10 justify-center items-center rounded-xl">
             <% if song.image.attached? %>
               <%= image_tag url_for(song.image) %>
             <% end %>
           </div>
 
-          <div class="flex-grow items-center w-0 ml-10">
+          <div class="flex-grow items-center w-0 ml-2">
             <h2 class="text-gray-300"><%= song.title %></h2>
           </div>
 
@@ -58,7 +93,15 @@
               <% end %>
             </h2>
           </div>
-        <% end %>
+
+          <!-- Hidden audio element -->
+          <% if song.audio.attached? %>
+            <audio id="<%= dom_id(song) %>" controls style="display: none;">
+              <source src="<%= url_for(song.audio) %>" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          <%end%>
+        </div>
       </div>
     <% end %>
   </div>
