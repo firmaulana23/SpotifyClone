@@ -1,0 +1,64 @@
+<div id="songs" class="w-full left-0">
+      <% @songs.each do |song| %>
+      <% bg_color = cycle('#220c30', '#1d0f30') %>
+      <div class="flex w-full items-center h-20" style="background-color: <%= bg_color %>;">
+        <div class="song-container flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" data-audio-id="<%= dom_id(song) %>">
+          <div class="flex w-12 h-12 ml-3 justify-center items-center rounded-xl">
+            <% if song.image.attached? %>
+              <%= image_tag url_for(song.image), class:"object-cover w-full h-full" %>
+            <% end %>
+          </div>
+
+          <div class="flex-col items-center w-64 ml-2 text-gray-300">
+            <h2 class=""><%= song.title %></h2>
+            <p class="text-gray-500">
+            <%= song.artists.pluck(:name).join(", ") %>
+            </p>
+          </div>
+
+          <div class="flex items-center text-gray-300 w-56 justify-center">
+            <% if song.album.present? %>
+              <%= song.album.name %>
+            <% else %>
+              Original Signal
+            <% end %>
+              
+          
+          </div>
+
+          <div class="flex justify-center w-44">
+            <h2 class="text-gray-300">
+              <% if song.duration.present? %>
+                <%= song.format_duration(song.duration) %>
+              <% else %>
+                00:00
+              <% end %>
+            </h2>
+          </div>
+
+          <div class="flex w-10 justify-center">
+            <% if song %>
+              <% if current_user.liked_songs.exists?(song_id: song.id) %>
+                <%= button_to unlike_client_song_path(song), method: :delete, class: 'border-0 bg-transparent p-0', remote: true do %>
+                  <%= image_tag 'love-icon.svg', alt: 'Unlike', class: 'h-6 w-6 cursor-pointer svg-white' %>
+                <% end %>
+              <% else %>
+                <%= button_to like_client_song_path(song), method: :post, class: 'border-0 bg-transparent p-0', remote: true do %>
+                  <%= image_tag 'love-icon.svg', alt: 'Like', class: 'h-6 w-6 cursor-pointer' %>
+                <% end %>
+              <% end %>
+            <% else %>
+              <p>Song not available</p>
+            <% end %>
+          </div>
+
+          <!-- Hidden audio element -->
+          <% if song.audio.attached? %>
+            <audio id="<%= dom_id(song) %>" controls style="display: none;">
+              <source src="<%= url_for(song.audio) %>" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          <%end%>
+        </div>
+      </div>
+    <% end %>

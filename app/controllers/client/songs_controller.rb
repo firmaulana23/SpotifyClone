@@ -1,47 +1,28 @@
 class Client::SongsController < ApplicationController
-  before_action :set_song, only: [:show, :destroy, :index]
+  before_action :authenticate_user!
+  before_action :set_song, only: [:show, :index, :like, :unlike]
   def index
     @songs = Song.all
-  end
-
-  def new
-    @song = Song.new
-    @song.artist_songs.build
   end
 
   def show
   end
 
-  def create
-    @song = Song.new(song_params)
-    if @song.save
-      redirect_to admin_songs_path, notice: 'Song was successfully created.'
-    else
-      render :new
-    end
-  end
-
-
-
-  def update
+  def like
+    # Ensure that @song is set correctly
+    current_user.liked_songs.create(song: @song)
     respond_to do |format|
-      if @song.update(song_params)
-        format.html { redirect_to admin_song_url(@song), notice: "Song was successfully updated." }
-        format.json { render :show, status: :ok, location: @song }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @song.errors, status: :unprocessable_entity }
+      format.html { redirect_to client_songs_path, notice: 'Song liked.' }
+      format.js   # This will look for a corresponding .js.erb view
       end
-    end
   end
 
-  def destroy
-    @song.destroy!
-
+  def unlike
+    current_user.liked_songs.find_by(song: @song)&.destroy
     respond_to do |format|
-      format.html { redirect_to admin_songs_url, notice: "Song was successfully destroyed." }
-      format.json { head :no_content }
-    end
+      format.html { redirect_to client_songs_path, notice: 'Song unliked.' }
+      format.js   # This will look for a corresponding .js.erb view
+      end
   end
 
   private

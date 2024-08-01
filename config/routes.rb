@@ -24,15 +24,22 @@ Rails.application.routes.draw do
 
   # Client namespace
   namespace :client do
+    get 'dashboard/index'
     root "dashboard#index"  # Client dashboard root
     resources :artists, only: [:index, :show]
     resources :albums, only: [:index, :show]
-    resources :songs, only: [:index, :show]
+    resources :songs, only: [:index, :show] do
+      member do
+        post 'like'
+        delete 'unlike'
+      end
+    end
     resources :playlists, only: [:index, :show, :create, :update, :destroy]
     resources :liked_songs, only: [:index]
     # Add more client-specific routes here
   end
   resources :users, only: [:show, :edit, :update]
+  resources :liked_songs, only: [:index, :create, :destroy]
 
   
   authenticated :user, -> user { user.admin? } do
