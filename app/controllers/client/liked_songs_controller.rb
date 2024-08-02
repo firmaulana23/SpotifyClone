@@ -2,6 +2,9 @@ class Client::LikedSongsController < ApplicationController
   before_action :authenticate_user! # Ensure the user is logged in
   before_action :set_song, only: [:create, :destroy]
 
+  def show
+  end
+
   def create
     # Find or create a like for the current user and the specified song
     liked_song = current_user.liked_songs.new(song: @song)

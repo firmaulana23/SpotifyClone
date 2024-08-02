@@ -22,54 +22,31 @@
       });
     });
   });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Event listener untuk liked-lib
+    document.getElementById('liked-lib').addEventListener('click', function() {
+      fetch('<%= liked_songs_client_songs_path %>', { 
+        method: 'GET', 
+        headers: { 'X-Requested-With': 'XMLHttpRequest' } 
+      })
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('index-song-container').innerHTML = html;
+      })
+      .catch(error => console.error('Error fetching liked songs:', error));
+    });
+  });
 </script>
 
 <div class="flex h-auto w-full space-x-4 mt-24">
   <!-- Library -->
   <div class="flex flex-col rounded-lg shadow-lg w-4/12 h-full" style="background-color: #1d0f30;">
-    <div class="flex items-center w-full justify-between mb-5 pl-10 pt-10">
-      <h2 class="text-gray-300 font-extrabold text-3xl">Library</h2>
-      <%= image_tag 'index/plus-icon.svg', alt: 'Add', class: 'h-6 w-6 mr-10 svg-white' %>
-    </div>
-
-    <div class="flex space-x-4 p-4 justify-center">
-      <button class="bg-purple-700 text-gray-400 rounded-full py-0 px-3" style="background-color: #4A2574;">My Playlist</button>
-      <button class="bg-purple-700 text-gray-400 rounded-full py-0 px-3" style="background-color: #4A2574;">Others</button>
-    </div>
-
-    <div class="py-2 px-3 hover:bg-gray-100/10 transition duration-300 flex">
-      <div class="flex h-full items-center">
-      <%= image_tag 'love-icon.svg', alt: 'Add', class: 'h-18 w-12 svg-white border ml-1' %>
-      </div>
-
-      <div class="text-gray-300 flex-col ml-3">
-      <p class="">Liked</p>
-      <p class="text-gray-500 text-sm"><%= current_user.songs.count %> Songs</p>
-      </div>
-    </div>
-
-    <div id="playlists" class="space-y-5 flex flex-col">
-      <% if @playlists.present? %>
-        <% @playlists.each do |playlist| %>
-          <%= link_to playlist_path(playlist), class: "border rounded py-2 px-3 block hover:bg-gray-100 transition duration-300" do %>
-            <div>
-              <%= render playlist %>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %>  
-    </div>
+    <%= render "library"%>
   </div>
 
   <!-- Home -->
-  <div class="rounded-lg shadow-lg w-8/12 max-h-full" style="background-color: #1d0f30;">
-    <p class="text-gray-300 font-extrabold text-3xl p-7 "> Recomended for you</p>
-    <div class="flex w-full items-center h-20 text-gray-300">
-      <p class="w-80 pl-16">Song</p>
-      <p class="flex w-56 items-center justify-center pl-1">Album<p>
-      <p class="flex w-44 justify-center pl-3">Duration<p>
-    </div>
-
+  <div id="index-song-container" class="rounded-lg shadow-lg w-8/12 max-h-full" style="background-color: #1d0f30;">
     <%= render "song_index"%>
   </div>
 </div>

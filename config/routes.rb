@@ -33,6 +33,9 @@ Rails.application.routes.draw do
         post 'like'
         delete 'unlike'
       end
+      collection do
+        get 'liked_songs' # This route handles the AJAX request for liked songs
+      end
     end
     resources :playlists, only: [:index, :show, :create, :update, :destroy]
     resources :liked_songs, only: [:index]

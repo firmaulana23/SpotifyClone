@@ -8,6 +8,11 @@ class Client::SongsController < ApplicationController
   def show
   end
 
+  def liked_songs
+    @liked_songs = current_user.liked_songs.includes(:song)
+    render partial: 'client/likeds/song_index', locals: { songs: @liked_songs.map(&:song) }
+  end
+
   def like
     # Ensure that @song is set correctly
     current_user.liked_songs.create(song: @song)
