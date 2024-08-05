@@ -8,18 +8,19 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
-
   
   # Admin namespace
-  namespace :admin do
-    get 'dashboard/index'
-    root "dashboard#index"  # Admin dashboard root
-    resources :users
-    resources :songs, param: :id
-    resources :artist_songs
-    resources :artists
-    resources :albums
-    # Add more admin-specific routes here
+  authenticate :user, ->(user) { user.admin? } do
+    namespace :admin do
+      get 'dashboard/index'
+      root "dashboard#index"  # Admin dashboard root
+      resources :users
+      resources :songs, param: :id
+      resources :artist_songs
+      resources :artists
+      resources :albums
+      # Add more admin-specific routes here
+    end
   end
 
   # Client namespace
@@ -38,13 +39,11 @@ Rails.application.routes.draw do
       end
     end
     resources :playlists, only: [:index, :show, :create, :update, :destroy]
-    resources :liked_songs, only: [:index]
+    resources :liked_songs, only: [:index, :create, :destroy]
     # Add more client-specific routes here
   end
   resources :users, only: [:show, :edit, :update]
-  resources :liked_songs, only: [:index, :create, :destroy]
 
-  
   authenticated :user, -> user { user.admin? } do
     root to: 'admin/dashboard#index', as: :admin_root_path
   end
