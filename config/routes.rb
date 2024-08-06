@@ -12,11 +12,8 @@ Rails.application.routes.draw do
   # Admin namespace
   authenticate :user, ->(user) { user.admin? } do
     namespace :admin do
-      get 'dashboard/index'
       root "dashboard#index"  # Admin dashboard root
-      resources :users
       resources :songs, param: :id
-      resources :artist_songs
       resources :artists
       resources :albums
       # Add more admin-specific routes here
@@ -25,7 +22,6 @@ Rails.application.routes.draw do
 
   # Client namespace
   namespace :client do
-    get 'dashboard/index'
     root "dashboard#index"  # Client dashboard root
     resources :artists, only: [:index, :show]
     resources :albums, only: [:index, :show]

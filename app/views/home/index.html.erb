@@ -45,17 +45,18 @@
   <!-- Home -->
   <div class="rounded-lg shadow-lg w-8/12 max-h-full" style="background-color: #1d0f30;">
     <p class="text-gray-300 font-extrabold text-3xl p-7 "> Recomended for you</p>
-    <div class="flex flex-grow w-full items-center h-20 text-gray-300">
-      <p class="ml-6 w-16 mr-1">#</p>
-      <p class="w-80">Song</p>
-      <p class="w-60">Artist<p>
-      <p class="ml-3">Duration<p>
+    <div class="flex items-center h-20 text-gray-300 bg-[#1d0f30] p-4">
+      <p class="w-1/12 text-center">#</p>
+      <p class="w-5/12 flex text-center">Song</p>
+      <p class="w-full text-center">Artist</p>
+      <p class="w-5/12 pl-3">Duration</p>
     </div>
+
     <div id="songs" class="w-full left-0">
       <% @songs.each do |song| %>
       <% bg_color = cycle('#220c30', '#1d0f30') %>
       <div class="flex w-full items-center justify-between h-20" style="background-color: <%= bg_color %>;">
-        <div class="song-container flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" data-audio-id="<%= dom_id(song) %>">
+        <div class=".song-container flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" data-audio-id="<%= dom_id(song) %>">
           <div class="flex w-12 h-12 ml-10 justify-center items-center rounded-xl">
             <% if song.image.attached? %>
               <%= image_tag url_for(song.image) %>
