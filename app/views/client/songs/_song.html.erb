@@ -1,3 +1,4 @@
+<!-- app/views/client/playlists/_song.html.erb -->
 <p class="text-gray-300 font-extrabold text-3xl p-7 "> Recomended for you</p>
 <div class="flex w-full items-center h-20 text-gray-300">
   <p class="w-80 pl-16">Song</p>
@@ -29,8 +30,6 @@
           <% else %>
             Original Signal
           <% end %>
-            
-        
         </div>
 
         <div class="flex justify-center w-44">
@@ -59,6 +58,17 @@
           <% end %>
         </div>
 
+
+        <button class="add-to-playlist-button">Add to Playlist</button>
+        <div class="add-to-playlist-form" style="display: none;">
+          <%= form_with url: add_song_client_playlists_path, method: :post, local: true do |form| %>
+            <%= form.hidden_field :song_id, value: song.id %>
+            <%= form.label :playlist_id, 'Select Playlist' %>
+            <%= form.collection_select :playlist_id, current_user.playlists, :id, :name, prompt: 'Choose a playlist' %>
+            <%= form.submit 'Add' %>
+          <% end %>
+        </div>
+
         <!-- Hidden audio element -->
         <% if song.audio.attached? %>
           <audio id="<%= dom_id(song) %>" controls style="display: none;">
@@ -66,7 +76,9 @@
             Your browser does not support the audio element.
           </audio>
         <%end%>
+
       </div>
     </div>
   <% end %>
 </div>
+

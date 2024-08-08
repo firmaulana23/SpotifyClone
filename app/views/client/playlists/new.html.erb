@@ -1,0 +1,9 @@
+<!-- app/views/client/playlists/new.html.erb -->
+<h1>Create a New Playlist</h1>
+
+<%= form_with model: @playlist, local: true do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.submit 'Create Playlist' %>
+<% end %>

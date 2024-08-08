@@ -9,7 +9,22 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_importmap_tags %>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.add-to-playlist-button');
+        buttons.forEach(button => {
+          button.addEventListener('click', function() {
+            // Locate the form within the closest .song-container
+            const songContainer = this.closest('.song-container');
+            const form = songContainer.querySelector('.add-to-playlist-form');
+            form.style.display = 'block';
+          });
+        });
+      });
+    </script>
   </head>
 
   <body style="background-color: #0e061a;">

@@ -1,5 +1,6 @@
 <!-- index.html .html.rb-->
 
+
 <div class="flex h-auto w-full space-x-4 mt-24">
   <!-- Library -->
   <div class="flex flex-col rounded-lg shadow-lg w-4/12 h-full" style="background-color: #1d0f30;">
@@ -8,7 +9,7 @@
 
   <!-- Home -->
   <div id="index-song-container" class="rounded-lg shadow-lg w-8/12 max-h-full" style="background-color: #1d0f30;">
-    <%= render "song_index"%>
+    <%= render "/client/songs/song", song: @song %>
   </div>
 </div>
 
@@ -37,18 +38,27 @@
   });
 
   document.addEventListener("DOMContentLoaded", function() {
-      // Event listener untuk liked-lib
-      document.getElementById('liked-lib').addEventListener('click', function() {
-        fetch('<%= liked_songs_client_songs_path %>', { 
-          method: 'GET', 
-          headers: { 'X-Requested-With': 'XMLHttpRequest' } 
-        })
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('index-song-container').innerHTML = html;
-        })
-        .catch(error => console.error('Error fetching liked songs:', error));
-      });
+    // Event listener untuk liked-lib
+    document.getElementById('liked-lib').addEventListener('click', function() {
+      fetch('<%= liked_songs_client_songs_path %>', { 
+        method: 'GET', 
+        headers: { 'X-Requested-With': 'XMLHttpRequest' } 
+      })
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('index-song-container').innerHTML = html;
+      })
+      .catch(error => console.error('Error fetching liked songs:', error));
     });
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+  var addPlaylistIcon = document.getElementById('add-playlist-icon');
+  var newPlaylistForm = document.getElementById('new-playlist-form');
+
+  addPlaylistIcon.addEventListener('click', function() {
+    newPlaylistForm.style.display = newPlaylistForm.style.display === 'none' ? 'block' : 'none';
+  });
+});
 
 </script>

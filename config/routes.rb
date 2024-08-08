@@ -34,7 +34,9 @@ Rails.application.routes.draw do
         get 'liked_songs' # This route handles the AJAX request for liked songs
       end
     end
-    resources :playlists, only: [:index, :show, :create, :update, :destroy]
+    resources :playlists do
+      post 'add_song', on: :collection
+    end
     resources :liked_songs, only: [:index, :create, :destroy]
     # Add more client-specific routes here
   end
