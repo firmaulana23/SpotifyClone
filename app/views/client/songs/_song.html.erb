@@ -1,30 +1,22 @@
-<!-- app/views/client/playlists/_song.html.erb -->
-<p class="text-gray-300 font-extrabold text-3xl p-7 "> Recomended for you</p>
-<div class="flex w-full items-center h-20 text-gray-300">
-  <p class="w-80 pl-16">Song</p>
-  <p class="flex w-56 items-center justify-center pl-1">Album<p>
-  <p class="flex w-44 justify-center pl-3">Duration<p>
-</div>
-
 <div id="songs" class="w-full left-0">
   <% @songs.each do |song| %>
     <% bg_color = cycle('#220c30', '#1d0f30') %>
-    <div class="flex w-full items-center h-20" style="background-color: <%= bg_color %>;">
+    <div class="flex w-full items-center h-20 rounded-lg shadow-md" style="background-color: <%= bg_color %>;">
       <div class="song-container flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" data-audio-id="<%= dom_id(song) %>">
-        <div class="flex w-12 h-12 ml-3 justify-center items-center rounded-xl">
+        <div class="flex w-12 h-12 ml-4  justify-center items-center rounded-xl">
           <% if song.image.attached? %>
-            <%= image_tag url_for(song.image), class:"object-cover w-full h-full" %>
+            <%= image_tag url_for(song.image), class:"object-cover w-full h-full rounded-lg" %>
           <% end %>
         </div>
 
-        <div class="flex-col items-center w-64 ml-2 text-gray-300">
-          <h2 class=""><%= song.title %></h2>
+        <div class="flex flex-col justify-center  w-5/12 pading pl-7 text-gray-300 ">
+          <h2 class="text-lg font-semibold"><%= song.title %></h2>
           <p class="text-gray-500">
-          <%= song.artists.pluck(:name).join(", ") %>
+            <%= song.artists.pluck(:name).join(", ") %>
           </p>
         </div>
 
-        <div class="flex items-center text-gray-300 w-56 justify-center">
+        <div class="flex items-center  justify-center text-gray-300 w-3/12">
           <% if song.album.present? %>
             <%= song.album.name %>
           <% else %>
@@ -32,7 +24,7 @@
           <% end %>
         </div>
 
-        <div class="flex justify-center w-44">
+        <div class="flex items-center justify-center w-44 pl-5 ">
           <h2 class="text-gray-300">
             <% if song.duration.present? %>
               <%= song.format_duration(song.duration) %>
@@ -42,31 +34,44 @@
           </h2>
         </div>
 
-        <div class="flex w-10 justify-center">
+        <!-- Move the buttons to the right side -->
+        <div class="flex items-center space-x-4 ml-auto mr-4">
           <% if song %>
             <% if current_user.liked_songs.exists?(song_id: song.id) %>
-              <%= button_to unlike_client_song_path(song), method: :delete, class: 'border-0 bg-transparent p-0', remote: true do %>
+              <%= button_to unlike_client_song_path(song), method: :delete, class: '-0 bg-transparent p-0', remote: true do %>
                 <%= image_tag 'love-icon.svg', alt: 'Unlike', class: 'h-6 w-6 cursor-pointer svg-white' %>
               <% end %>
             <% else %>
-              <%= button_to like_client_song_path(song), method: :post, class: 'border-0 bg-transparent p-0', remote: true do %>
+              <%= button_to like_client_song_path(song), method: :post, class: '-0 bg-transparent p-0', remote: true do %>
                 <%= image_tag 'love-icon.svg', alt: 'Like', class: 'h-6 w-6 cursor-pointer' %>
               <% end %>
             <% end %>
           <% else %>
             <p>Song not available</p>
           <% end %>
+
+          <!-- Add to Playlist button -->
+          <button class="add-to-playlist-button text-white bg-blue-500 hover:bg-blue-700 rounded-lg p-2" onclick="toggleModal('<%= dom_id(song) %>')">
+            <%= image_tag 'index/plus-icon.svg', alt: 'Add to Playlist', class: 'h-6 w-6 cursor-pointer' %>
+          </button>
         </div>
 
-
-        <button class="add-to-playlist-button">Add to Playlist</button>
-        <div class="add-to-playlist-form" style="display: none;">
-          <%= form_with url: add_song_client_playlists_path, method: :post, local: true do |form| %>
-            <%= form.hidden_field :song_id, value: song.id %>
-            <%= form.label :playlist_id, 'Select Playlist' %>
-            <%= form.collection_select :playlist_id, current_user.playlists, :id, :name, prompt: 'Choose a playlist' %>
-            <%= form.submit 'Add' %>
-          <% end %>
+        <!-- Modal structure -->
+        <div id="modal-<%= dom_id(song) %>" class="modal hidden fixed z-10 inset-0 overflow-y-auto">
+          <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+              <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Select Playlist</h2>
+                <button onclick="toggleModal('<%= dom_id(song) %>')" class="text-gray-500 hover:text-gray-700">&times;</button>
+              </div>
+              <%= form_with url: add_song_client_playlists_path, method: :post, local: true, id: "form-#{dom_id(song)}" do |form| %>
+                <%= form.hidden_field :song_id, value: song.id %>
+                <%= form.label :playlist_id, 'Select Playlist' %>
+                <%= form.collection_select :playlist_id, current_user.playlists, :id, :name, prompt: 'Choose a playlist' %>
+                <%= form.submit 'Add', class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4' %>
+              <% end %>
+            </div>
+          </div>
         </div>
 
         <!-- Hidden audio element -->
@@ -75,10 +80,40 @@
             <source src="<%= url_for(song.audio) %>" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
-        <%end%>
-
+        <% end %>
       </div>
     </div>
   <% end %>
 </div>
 
+<script>
+  function toggleModal(songId) {
+    const modal = document.getElementById(`modal-${songId}`);
+    modal.classList.toggle('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.addEventListener('submit', async (event) => {
+      if (event.target.matches('form[id^="form-"]')) {
+        event.preventDefault(); // Prevent the default form submission
+        const form = event.target;
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          }
+        });
+
+        if (response.ok) {
+          const modalId = form.id.replace('form-', 'modal-');
+          const modal = document.getElementById(modalId);
+          modal.classList.add('hidden');
+        } else {
+          console.error('Form submission failed');
+        }
+      }
+    });
+  });
+</script>

@@ -1,5 +1,4 @@
-<!-- index.html .html.rb-->
-
+<!-- app/views/client/dashboard/index.html.erb -->
 
 <div class="flex h-auto w-full space-x-4 mt-24">
   <!-- Library -->
@@ -7,36 +6,13 @@
     <%= render "library"%>
   </div>
 
-  <!-- Home -->
+  <!-- Songs -->
   <div id="index-song-container" class="rounded-lg shadow-lg w-8/12 max-h-full" style="background-color: #1d0f30;">
-    <%= render "/client/songs/song", song: @song %>
+    <%= render "song", song: @song %>
   </div>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Select all song containers
-    document.querySelectorAll('.song-container').forEach(function(container) {
-      container.addEventListener('click', function() {
-        // Get the associated audio element
-        var audioId = container.getAttribute('data-audio-id');
-        var audio = document.getElementById(audioId);
-        
-        // Pause all other audios
-        document.querySelectorAll('audio').forEach(function(a) {
-          if (a !== audio) a.pause();
-        });
-
-        // Play the selected audio
-        if (audio.paused) {
-          audio.play();
-        } else {
-          audio.pause();
-        }
-      });
-    });
-  });
-
   document.addEventListener("DOMContentLoaded", function() {
     // Event listener untuk liked-lib
     document.getElementById('liked-lib').addEventListener('click', function() {
@@ -53,12 +29,11 @@
   });
 
   document.addEventListener('DOMContentLoaded', function() {
-  var addPlaylistIcon = document.getElementById('add-playlist-icon');
-  var newPlaylistForm = document.getElementById('new-playlist-form');
+    var addPlaylistIcon = document.getElementById('add-playlist-icon');
+    var newPlaylistForm = document.getElementById('new-playlist-form');
 
-  addPlaylistIcon.addEventListener('click', function() {
-    newPlaylistForm.style.display = newPlaylistForm.style.display === 'none' ? 'block' : 'none';
+    addPlaylistIcon.addEventListener('click', function() {
+      newPlaylistForm.style.display = newPlaylistForm.style.display === 'none' ? 'block' : 'none';
+    });
   });
-});
-
 </script>

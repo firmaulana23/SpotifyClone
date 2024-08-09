@@ -1,0 +1,9 @@
+<!-- app/views/client/playlists/_songs_list.html.erb -->
+<p class="text-white font-extrabold text-3xl p-8">Recommended for you</p>
+<div class="flex w-full items-center h-20 text-gray-300 bg-gray-800 shadow-md mb-4">
+    <p class="w-5/12 ml-16 pl-6 ">Song</p>
+    <p class="w-3/12 pl-12 ">Album</p>
+    <p class="w-44 pl-5 ">Duration</p>
+</div>
+
+<%= render "/client/songs/song", song: @song %>
