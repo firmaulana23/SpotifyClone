@@ -1,6 +1,23 @@
 Rails.application.routes.draw do
-  get 'search/index'
-  get 'home/index'
+  authenticated :user, -> user { user.admin? } do
+    root to: 'admin/dashboard#index', as: :admin_root_path
+  end
+  
+  authenticated :user do
+    root to: 'client/dashboard#index', as: :client_root_path
+  end
+  
+  # Define the fallback root path for unauthenticated users
+  unauthenticated do
+    root to: 'dashboard#index'
+  end
+
+  get 'dashboard/index'
+  get 'dashboard/search', to: 'dashboard#search', as: 'dashboard_search'
+
+  resources :songs, only: [:index, :show]
+  resources :artists, only: [:index, :show]
+  resources :albums, only: [:index, :show]
   
   devise_for :users, controllers: {
     sessions: 'users/sessions'
@@ -42,18 +59,7 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:show, :edit, :update]
 
-  authenticated :user, -> user { user.admin? } do
-    root to: 'admin/dashboard#index', as: :admin_root_path
-  end
-  
-  authenticated :user do
-    root to: 'client/dashboard#index', as: :client_root_path
-  end
-  
-  # Define the fallback root path for unauthenticated users
-  unauthenticated do
-    root to: 'home#index'
-  end
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

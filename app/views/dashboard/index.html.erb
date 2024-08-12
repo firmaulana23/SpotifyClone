@@ -32,7 +32,7 @@
       <% @songs.each do |song| %>
       <% bg_color = cycle('#220c30', '#1d0f30') %>
       <div class="flex w-full items-center justify-between h-20" style="background-color: <%= bg_color %>;">
-        <div class=".song-container flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" data-audio-id="<%= dom_id(song) %>">
+        <div class="song-container flex-grow flex items-center w-full h-full cursor-pointer hover:bg-gray-200/10" data-audio-id="<%= dom_id(song) %>">
           <div class="flex w-12 h-12 ml-10 justify-center items-center rounded-xl">
             <% if song.image.attached? %>
               <%= image_tag url_for(song.image) %>

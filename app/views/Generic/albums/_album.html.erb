@@ -1,4 +1,10 @@
-<div id="<%= dom_id album %>">
+<div id="<%= dom_id album %>" class="text-gray-400 mt-24">
+  <% if album.image.attached? %>
+    <div class="flex w-full h-40 justify-center items-center">
+      <%= image_tag url_for(album.image), class: "w-40" %>
+    </div>  
+  <% end %>
+
   <p class="my-5">
     <strong class="block font-medium mb-1">Name:</strong>
     <%= album.name %>
@@ -6,14 +12,16 @@
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Song:</strong>
-    <% album.songs.each do |song| %>
-      <%= song.title %> |
-      <% end %>
+    <%= album.songs.pluck(:title).join(", ") %>
   </p>
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Release date:</strong>
-    <%= album.release_date %>
+    <% if album.release_date.present? %>
+      <%= album.release_date %>
+    <% else %>
+      Unknown
+    <% end %>
   </p>
 
 </div>

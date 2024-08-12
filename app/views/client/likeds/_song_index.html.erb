@@ -56,11 +56,12 @@
             <source src="<%= url_for(song.audio) %>" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
-        <%end%>
+        <% end %>
       </div>
     </div>
   <% end %>
 </div>
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     // Select all song containers

@@ -39,8 +39,11 @@
           </div>
 
           <!-- Search input -->
-          <div class="flex items-center bg-gray-700 rounded-full px-2 py-1.5 max-w-full">
-            <input type="text" placeholder="Search" class="bg-transparent border-none w-full text-white placeholder-gray-400 focus:outline-none ml-2 mx-20">
+          <div class="flex items-center">
+            <%= form_with url: dashboard_search_path, method: :get, local: true, class: "flex items-center" do %>
+              <input type="text" name="query" placeholder="Search..." class="px-4 py-2 rounded-lg">
+              <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+            <% end %>
           </div>
         </div>
         

@@ -1,0 +1,49 @@
+<!-- app/views/dashboard/index.html.erb -->
+<div class="container mx-auto p-4 text-white">
+  <h1 class="text-3xl font-bold mb-6">Search Results for "<%= @query %>"</h1>
+
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4">Songs</h2>
+    <% if @songs.any? %>
+      <ul class="space-y-2">
+        <% @songs.each do |song| %>
+          <li class="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">
+            <%= link_to song.title, song_path(song), class: "text-lg font-medium text-blue-400 hover:underline" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-gray-400">No songs found.</p>
+    <% end %>
+  </div>
+
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4">Artists</h2>
+    <% if @artists.any? %>
+      <ul class="space-y-2">
+        <% @artists.each do |artist| %>
+          <li class="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">
+            <%= link_to artist.name, artist_path(artist), class: "text-lg font-medium text-blue-400 hover:underline" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-gray-400">No artists found.</p>
+    <% end %>
+  </div>
+
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4">Album</h2>
+    <% if @albums.any? %>
+      <ul class="space-y-2">
+        <% @albums.each do |album| %>
+          <li class="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition">
+            <%= link_to album.name, album_path(album), class: "text-lg font-medium text-blue-400 hover:underline" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-gray-400">No Albums found.</p>
+    <% end %>
+  </div>
+</div>

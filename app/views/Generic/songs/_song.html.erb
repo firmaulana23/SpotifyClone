@@ -1,33 +1,51 @@
-<div id="<%= dom_id song %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Title:</strong>
-    <%= song.title %>
-  </p>
+<div id="<%= dom_id song %>" class="text-gray-400 mt-24">
+  <% if song.image.attached? %>
+    <div class="flex w-full h-40 justify-center items-center">
+      <%= image_tag url_for(song.image), class: "w-40" %>
+    </div>  
+  <% end %>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Artist:</strong>
-    <%= song.artists.pluck(:name).join(", ") %>
-  </p>
+  <div>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Title:</strong>
+      <%= song.title %>
+    </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Genre:</strong>
-    <% if song.genre == "1" %>
-      Pop
-    <% elsif song.genre == "2" %>
-      Rock
-    <% elsif song.genre == "3" %>
-      Classic
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Artist:</strong>
+      <%= song.artists.pluck(:name).join(", ") %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Genre:</strong>
+      <% if song.genre == "1" %>
+        Pop
+      <% elsif song.genre == "2" %>
+        Rock
+      <% elsif song.genre == "3" %>
+        Classic
+        <% end %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Release date:</strong>
+      <%= song.release_date %>
+    </p>
+
+    <% if song.audio.attached? %>
+      <audio controls>
+        <source src="<%= url_for(song.audio) %>" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    <% end %>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Duration:</strong>
+      <% if song.audio.attached? %>
+        <%= song.format_duration(song.duration) %>
+      <% else %>
+        <p>unknown </p>
       <% end %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Release date:</strong>
-    <%= song.release_date %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Duration:</strong>
-    <%= song.duration %>
-  </p>
-
+    </p>
+  </div>
 </div>
